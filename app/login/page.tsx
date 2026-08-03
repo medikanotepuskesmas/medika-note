@@ -43,7 +43,10 @@ export default function LoginPage() {
       }
 
       toast.success(`Selamat datang, ${profile?.nama || 'Pengguna'}!`);
-      router.push('/e-konseling/tambah');
+      
+      // MENGARAHKAN LANGSUNG KE DASHBOARD UTAMA
+      router.push('/');
+      router.refresh();
     } catch (err: any) {
       toast.error('Terjadi kesalahan: ' + err.message);
     } finally {
@@ -77,7 +80,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* PASSWORD DENGAN IKON MATA */}
+          {/* PASSWORD */}
           <div>
             <label className="block text-sm font-bold text-cyan-800 mb-1">
               Password

@@ -33,7 +33,8 @@ export default function RegisterPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/login`,
+          // REDIRECT LANGSUNG KE DASHBOARD UTAMA SETELAH VERIFIKASI EMAIL
+          emailRedirectTo: `${window.location.origin}/`,
           data: {
             nama: nama,
             role: 'staff',
@@ -42,11 +43,9 @@ export default function RegisterPage() {
       });
 
       if (error) {
-        // Tampilkan pesan error secara jelas
         const errorMessage = error.message || JSON.stringify(error);
         toast.error('Registrasi gagal: ' + errorMessage);
       } else if (data.user && data.user.identities && data.user.identities.length === 0) {
-        // Kasus jika email sudah terdaftar sebelumnya
         toast.error('Email ini sudah terdaftar! Silakan gunakan email lain atau Login.');
       } else {
         setIsSuccess(true);
@@ -80,7 +79,6 @@ export default function RegisterPage() {
               Silakan klik tombol di bawah untuk langsung membuka inbox email Anda dan melakukan verifikasi.
             </p>
 
-            {/* TOMBOL DENGAN LINK LANGSUNG KE INBOX EMAIL */}
             <div className="pt-2 space-y-2">
               <a
                 href={getEmailProviderUrl(email)}
