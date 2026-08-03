@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Tabel 1: Data e-Konseling
+model EKonseling {
+  id            String   @id @default(cuid())
+  namaPasien    String
+  jenisKelamin  String
+  tglLahir      DateTime?
+  tglKonseling  DateTime @default(now())
+  alamat        String?
+  namaDokter    String?
+  diagnosa      String?
+  resepObat     String?
+  riwayatAlergi String?
+  keluhan       String?
+  createdAt     DateTime @default(now())
+}
+
+// Tabel 2: Data e-PIO
+model EPIO {
+  id               String   @id @default(cuid())
+  namaPenanya      String
+  noTelp           String?
+  metode           String
+  statusPenanya    String
+  pertanyaan       String
+  jawaban          String
+  apoteker         String?
+  waktuPenyampaian String
+  createdAt        DateTime @default(now())
+}
