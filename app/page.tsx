@@ -1,27 +1,62 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 import Sidebar from '@/components/Sidebar';
 import Link from 'next/link';
 
 export default function Home() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // Jika belum login, lempar ke halaman login
+      if (!session) {
+        router.push('/login');
+      } else {
+        setLoading(false);
+      }
+    };
+
+    checkUser();
+  }, [router]);
+
+  // Tampilan loading sementara saat memeriksa status login
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <div className="flex items-center gap-2 text-cyan-800 font-bold">
+          <i className="fa-solid fa-circle-notch animate-spin text-2xl"></i>
+          <span>Memuat Dashboard...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen bg-slate-100">
       <Sidebar />
 
       <main className="flex-1 p-8 max-w-5xl mx-auto space-y-6">
+        {/* Banner Welcome */}
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-slate-800">
               Selamat Datang di Aplikasi e-Konseling & e-PIO
             </h2>
             <p className="text-slate-600 mt-1">
-              Sistem rekapitulasi data Pelayanan Informasi Obat dan Konseling Pasien UPTD Puskesmas.
+              Sistem rekapitulasi data Pelayanan Informasi Obat dan Konseling Pasien UPTD Puskesmas Banyu Urip.
             </p>
           </div>
         </div>
 
         {/* Action Quick Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Card e-Konseling */}
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div className="flex items-center gap-3 text-teal-700">
               <i className="fa-solid fa-user-doctor text-2xl"></i>
@@ -46,6 +81,7 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Card e-PIO */}
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div className="flex items-center gap-3 text-cyan-700">
               <i className="fa-solid fa-pills text-2xl"></i>
