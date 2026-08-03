@@ -65,7 +65,7 @@ export default function Sidebar() {
     <>
       {/* Header Floating Mobile */}
       <div className="md:hidden fixed top-3 left-3 right-3 z-50 bg-slate-900/90 backdrop-blur-md text-white px-5 py-3.5 flex items-center justify-between rounded-2xl shadow-2xl border border-slate-700/60">
-        <div className="flex items-center gap-3">
+        <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-xl bg-teal-600/30 border border-teal-500/40 flex items-center justify-center text-teal-400 text-sm">
             <i className="fa-solid fa-notes-medical"></i>
           </div>
@@ -73,7 +73,7 @@ export default function Sidebar() {
             <h1 className="font-bold text-sm leading-tight text-white">e-Konseling & PIO</h1>
             <p className="text-[10px] text-slate-400 font-medium">UPTD Puskesmas Banyu Urip</p>
           </div>
-        </div>
+        </Link>
 
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -98,13 +98,17 @@ export default function Sidebar() {
         }`}
       >
         <div className="space-y-5">
-          {/* Header App Desktop */}
-          <div className="hidden md:block px-2 py-3 border-b border-slate-800">
-            <h1 className="font-bold text-white text-lg tracking-wide">
+          {/* Header App Desktop (Dibuat Link ke Halaman Utama) */}
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="hidden md:block px-2 py-3 border-b border-slate-800 hover:opacity-80 transition group"
+          >
+            <h1 className="font-bold text-white text-lg tracking-wide group-hover:text-teal-400 transition">
               e-Konseling & PIO
             </h1>
             <p className="text-xs text-slate-400">UPTD Puskesmas Banyu Urip</p>
-          </div>
+          </Link>
 
           {/* Profile Info User Login */}
           <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 flex items-center gap-3 mt-10 md:mt-0">
@@ -127,8 +131,26 @@ export default function Sidebar() {
             </div>
           </div>
 
-          {/* Menu Navigasi 3 Grid Kategori Terpisah */}
+          {/* Menu Navigasi Terpisah */}
           <nav className="space-y-4 text-sm font-medium">
+            {/* 🏠 MENU HALAMAN UTAMA / DASHBOARD */}
+            <div className="space-y-1">
+              <Link
+                href="/"
+                onClick={() => setIsOpen(false)}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition ${
+                  pathname === '/'
+                    ? 'bg-slate-800 text-white font-bold border border-slate-700 shadow-sm'
+                    : 'hover:bg-slate-800/80 hover:text-white text-slate-300'
+                }`}
+              >
+                <i className="fa-solid fa-house text-slate-400"></i>
+                <span>Dashboard Utama</span>
+              </Link>
+            </div>
+
+            <div className="border-t border-slate-800/80"></div>
+
             {/* GRID 1: E-KONSELING */}
             <div className="space-y-1.5">
               <div className="px-3 text-[11px] font-bold text-teal-400 tracking-wider uppercase">

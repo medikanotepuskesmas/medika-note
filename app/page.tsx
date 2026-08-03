@@ -11,26 +11,37 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkUser = async () => {
+    // 1. Cek sesi saat ini
+    const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      
-      // Jika belum login, lempar ke halaman login
       if (!session) {
-        router.push('/login');
+        router.replace('/login');
       } else {
         setLoading(false);
       }
     };
 
-    checkUser();
+    checkSession();
+
+    // 2. Dengarkan perubahan status login/logout secara real-time
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        router.replace('/login');
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, [router]);
 
-  // Tampilan loading sementara saat memeriksa status login
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-100">
-        <div className="flex items-center gap-2 text-cyan-800 font-bold">
-          <i className="fa-solid fa-circle-notch animate-spin text-2xl"></i>
+        <div className="flex items-center gap-3 text-cyan-800 font-bold bg-white px-6 py-4 rounded-xl shadow-sm border border-slate-200">
+          <i className="fa-solid fa-circle-notch animate-spin text-2xl text-cyan-700"></i>
           <span>Memuat Dashboard...</span>
         </div>
       </div>
@@ -48,7 +59,7 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-slate-800">
               Selamat Datang di Aplikasi e-Konseling & e-PIO
             </h2>
-            <p className="text-slate-600 mt-1">
+            <p className="text-slate-600 mt-1 text-sm">
               Sistem rekapitulasi data Pelayanan Informasi Obat dan Konseling Pasien UPTD Puskesmas Banyu Urip.
             </p>
           </div>
