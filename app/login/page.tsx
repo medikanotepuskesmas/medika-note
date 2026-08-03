@@ -44,7 +44,7 @@ export default function LoginPage() {
 
       toast.success(`Selamat datang, ${profile?.nama || 'Pengguna'}!`);
       
-      // MENGARAHKAN LANGSUNG KE DASHBOARD UTAMA
+      // MENGARAHKAN LANGSUNG KE DASHBOARD UTAMA BERANDA
       router.push('/');
       router.refresh();
     } catch (err: any) {
@@ -80,7 +80,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* PASSWORD */}
+          {/* PASSWORD DENGAN IKON MATA */}
           <div>
             <label className="block text-sm font-bold text-cyan-800 mb-1">
               Password
