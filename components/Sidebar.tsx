@@ -30,7 +30,6 @@ export default function Sidebar() {
       } = await supabase.auth.getUser();
 
       if (user) {
-        // Ambil data profile pengguna dari tabel 'profiles'
         const { data: profile } = await supabase
           .from('profiles')
           .select('role, nama')
@@ -97,8 +96,9 @@ export default function Sidebar() {
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
-        <div className="space-y-5">
-          {/* Header App Desktop (Dibuat Link ke Halaman Utama) */}
+        {/* Container Menu dengan Scrollbar jika Layar Pendek */}
+        <div className="space-y-5 overflow-y-auto pr-1">
+          {/* Header App Desktop */}
           <Link
             href="/"
             onClick={() => setIsOpen(false)}
@@ -111,7 +111,7 @@ export default function Sidebar() {
           </Link>
 
           {/* Profile Info User Login */}
-          <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 flex items-center gap-3 mt-10 md:mt-0">
+          <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 flex items-center gap-3 mt-14 md:mt-0">
             <div className="w-9 h-9 rounded-full bg-teal-700 text-white font-bold flex items-center justify-center text-sm shadow shrink-0">
               {userName ? userName.charAt(0).toUpperCase() : 'U'}
             </div>
@@ -248,7 +248,7 @@ export default function Sidebar() {
         </div>
 
         {/* Tombol Log Out */}
-        <div className="pt-4 border-t border-slate-800">
+        <div className="pt-4 border-t border-slate-800 shrink-0">
           <button
             onClick={() => setShowLogoutModal(true)}
             className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-950/50 border border-rose-800/60 text-rose-300 hover:bg-rose-600 hover:text-white font-semibold text-sm rounded-lg transition shadow-sm"
@@ -264,7 +264,7 @@ export default function Sidebar() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-200 space-y-4 animate-in fade-in zoom-in duration-150">
             <div className="flex items-center gap-3 text-rose-600">
-              <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-lg">
+              <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-lg shrink-0">
                 <i className="fa-solid fa-right-from-bracket"></i>
               </div>
               <h3 className="font-bold text-slate-800 text-lg">Konfirmasi Log Out</h3>
